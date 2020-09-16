@@ -101,12 +101,12 @@ class QuickTileService : TileService() {
 
     override fun onStartListening() {
         Application.getTunnelManager().addOnPropertyChangedCallback(onTunnelChangedCallback)
-        if (tunnel != null) tunnel!!.addOnPropertyChangedCallback(onStateChangedCallback)
+        tunnel?.addOnPropertyChangedCallback(onStateChangedCallback)
         updateTile()
     }
 
     override fun onStopListening() {
-        if (tunnel != null) tunnel!!.removeOnPropertyChangedCallback(onStateChangedCallback)
+        tunnel?.removeOnPropertyChangedCallback(onStateChangedCallback)
         Application.getTunnelManager().removeOnPropertyChangedCallback(onTunnelChangedCallback)
     }
 
@@ -114,9 +114,9 @@ class QuickTileService : TileService() {
         // Update the tunnel.
         val newTunnel = Application.getTunnelManager().lastUsedTunnel
         if (newTunnel != tunnel) {
-            if (tunnel != null) tunnel!!.removeOnPropertyChangedCallback(onStateChangedCallback)
+            tunnel?.removeOnPropertyChangedCallback(onStateChangedCallback)
             tunnel = newTunnel
-            if (tunnel != null) tunnel!!.addOnPropertyChangedCallback(onStateChangedCallback)
+            tunnel?.addOnPropertyChangedCallback(onStateChangedCallback)
         }
         // Update the tile contents.
         val label: String
